@@ -1,5 +1,4 @@
 #include "common.h"  
-#include <bits/stdc++.h>
 #include <cmath>
 #include <algorithm>
 #include <numeric> 

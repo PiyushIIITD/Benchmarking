@@ -38,7 +38,7 @@
         } \
     } while (0)
 
-inline float measureGPUTime(const std::function<void(float*, float*, size_t)>&func, float* d_in, float* d_out, size_t num_elements) {
+inline float measureGPUTime(void (*func)(float*, float*, size_t), float* d_in, float* d_out, size_t num_elements) {
     cudaEvent_t start, stop;
     CUDA_CHECK(cudaEventCreate(&start));
     CUDA_CHECK(cudaEventCreate(&stop));
@@ -112,11 +112,6 @@ inline void freeMemory(float* h_ptr, float* d_ptr) {
     delete[] h_ptr;
     CUDA_CHECK(cudaFree(d_ptr));
 }
-void relu_cpu(const float* in, float* out, size_t N);
-void linear_cpu(const float* in, float* out, size_t N);
-void sigmoid_cpu(const float* in, float* out, size_t N);
-void tanh_cpu(const float* in, float* out, size_t N);
-void softmax_cpu(const float* in, float* out, size_t N);
 
 void relu_cuda(float* d_in, float* d_out, size_t N);
 void linear_cuda(float* d_in, float* d_out, size_t N);
@@ -124,11 +119,11 @@ void sigmoid_cuda(float* d_in, float* d_out, size_t N);
 void tanh_cuda(float* d_in, float* d_out, size_t N);
 void softmax_cuda(float* d_in, float* d_out, size_t N);
 
-// void relu_cuda(float* d_in, float* d_out, size_t N);
-// void linear_cuda(float* d_in, float* d_out, size_t N);
-// void sigmoid_cuda(float* d_in, float* d_out, size_t N);
-// void tanh_cuda(float* d_in, float* d_out, size_t N);
-// void softmax_cuda(float* d_in, float* d_out, size_t N);
+void relu_cuda(float* d_in, float* d_out, size_t N);
+void linear_cuda(float* d_in, float* d_out, size_t N);
+void sigmoid_cuda(float* d_in, float* d_out, size_t N);
+void tanh_cuda(float* d_in, float* d_out, size_t N);
+void softmax_cuda(float* d_in, float* d_out, size_t N);
 
 void relu_cudnn(float* d_in, float* d_out, size_t N);
 void linear_cudnn(float* d_in, float* d_out, size_t N);
@@ -136,8 +131,8 @@ void sigmoid_cudnn(float* d_in, float* d_out, size_t N);
 void tanh_cudnn(float* d_in, float* d_out, size_t N);
 void softmax_cudnn(float* d_in, float* d_out, size_t N);
 
-// void relu_cutensor(float* d_in, float* d_out, size_t N);
-// void linear_cutensor(float* d_in, float* d_out, size_t N);
-// void sigmoid_cutensor(float* d_in, float* d_out, size_t N);
-// void tanh_cutensor(float* d_in, float* d_out, size_t N);
-// void softmax_cutensor(float* d_in, float* d_out, size_t N);
+void relu_cutensor(float* d_in, float* d_out, size_t N);
+void linear_cutensor(float* d_in, float* d_out, size_t N);
+void sigmoid_cutensor(float* d_in, float* d_out, size_t N);
+void tanh_cutensor(float* d_in, float* d_out, size_t N);
+void softmax_cutensor(float* d_in, float* d_out, size_t N);

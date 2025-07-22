@@ -112,11 +112,6 @@ inline void freeMemory(float* h_ptr, float* d_ptr) {
     delete[] h_ptr;
     CUDA_CHECK(cudaFree(d_ptr));
 }
-void relu_cpu(const float* in, float* out, size_t N);
-void linear_cpu(const float* in, float* out, size_t N);
-void sigmoid_cpu(const float* in, float* out, size_t N);
-void tanh_cpu(const float* in, float* out, size_t N);
-void softmax_cpu(const float* in, float* out, size_t N);
 
 void relu_cuda(float* d_in, float* d_out, size_t N);
 void linear_cuda(float* d_in, float* d_out, size_t N);
