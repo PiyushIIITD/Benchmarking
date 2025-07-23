@@ -28,6 +28,16 @@
         } \
     } while (0)
 
+#define CUTENSOR_CHECK(call) \
+    do { \
+        cutensorStatus_t status = call; \
+        if (status != CUTENSOR_STATUS_SUCCESS) { \
+            std::cerr << "cuTENSOR Error at " << __FILE__ << ":" << __LINE__ \
+                      << ": " << cutensorGetErrorString(status) << std::endl; \
+            exit(EXIT_FAILURE); \
+        } \
+    } while (0)
+
 inline float measureGPUTime(const std::function<void(float*, float*, size_t)>&func, float* d_in, float* d_out, size_t num_elements) {
     cudaEvent_t start, stop;
     CUDA_CHECK(cudaEventCreate(&start));
@@ -79,6 +89,15 @@ struct CuDNNHandle {
     cudnnHandle_t get() const { return handle; }
 };
 
+struct CuTensorHandle {
+    cutensorHandle_t handle;
+    CuTensorHandle()  {
+        CUTENSOR_CHECK(cutensorCreate(&handle)); 
+    }
+    ~CuTensorHandle() {  }
+    cutensorHandle_t get() const { return handle; }
+};
+
 inline float* allocateDeviceMemory(size_t num_elements) {
     float* d_ptr;
     CUDA_CHECK(cudaMalloc(&d_ptr, num_elements * sizeof(float)));
@@ -93,3 +112,15 @@ inline void freeMemory(float* h_ptr, float* d_ptr) {
     delete[] h_ptr;
     CUDA_CHECK(cudaFree(d_ptr));
 }
+
+// void relu_cuda(float* d_in, float* d_out, size_t N);
+// void linear_cuda(float* d_in, float* d_out, size_t N);
+// void sigmoid_cuda(float* d_in, float* d_out, size_t N);
+// void tanh_cuda(float* d_in, float* d_out, size_t N);
+// void softmax_cuda(float* d_in, float* d_out, size_t N);
+
+// void relu_cutensor(float* d_in, float* d_out, size_t N);
+// void linear_cutensor(float* d_in, float* d_out, size_t N);
+// void sigmoid_cutensor(float* d_in, float* d_out, size_t N);
+// void tanh_cutensor(float* d_in, float* d_out, size_t N);
+// void softmax_cutensor(float* d_in, float* d_out, size_t N);

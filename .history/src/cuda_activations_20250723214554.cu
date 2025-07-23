@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include "commoner.h"
 #include <cuda_runtime.h>
 #include <cfloat>
 #include <math.h>

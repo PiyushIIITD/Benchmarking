@@ -79,6 +79,15 @@ struct CuDNNHandle {
     cudnnHandle_t get() const { return handle; }
 };
 
+struct CuTensorHandle {
+    cutensorHandle_t handle;
+    CuTensorHandle()  {
+        CUTENSOR_CHECK(cutensorCreate(&handle)); 
+    }
+    ~CuTensorHandle() {  }
+    cutensorHandle_t get() const { return handle; }
+};
+
 inline float* allocateDeviceMemory(size_t num_elements) {
     float* d_ptr;
     CUDA_CHECK(cudaMalloc(&d_ptr, num_elements * sizeof(float)));

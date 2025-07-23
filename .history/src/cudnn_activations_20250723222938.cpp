@@ -1,3 +1,4 @@
+// #include "commoner.h"
 #include "common.h"
 extern cudnnHandle_t g_cudnnHandle;
 void createTensorDescriptor(cudnnTensorDescriptor_t& descriptor, size_t N) {

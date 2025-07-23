@@ -1,0 +1,52 @@
+
+ Benchmarking ReLU (N=1024)
+CPU Time: 0.0081 ms/op
+Custom CUDA Time: 0.0113 ms/op
+cuDNN Time: 0.0258 ms/op
+
+ Benchmarking Linear (N=1024)
+CPU Time: 0.0031 ms/op
+Custom CUDA Time: 0.0113 ms/op
+cuDNN Time: 0.0113 ms/op
+
+ Benchmarking Sigmoid (N=1024)
+CPU Time: 0.0098 ms/op
+Custom CUDA Time: 0.0114 ms/op
+cuDNN Time: 0.0287 ms/op
+
+ Benchmarking Tanh (N=1024)
+CPU Time: 0.0261 ms/op
+Custom CUDA Time: 0.0112 ms/op
+cuDNN Time: 0.0269 ms/op
+
+ Benchmarking Softmax (N=1024)
+CPU Time: 0.0298 ms/op
+Custom CUDA Time: 0.1306 ms/op
+cuDNN Time: 0.0185 ms/op
+Verification failed at index 0: CPU=2.22684e-12, GPU=1
+
+ Benchmarking ReLU (N=1048576)
+CPU Time: 9.4923 ms/op
+Custom CUDA Time: 0.9757 ms/op
+cuDNN Time: 1.0375 ms/op
+
+ Benchmarking Linear (N=1048576)
+CPU Time: 1.5490 ms/op
+Custom CUDA Time: 0.9780 ms/op
+cuDNN Time: 1.0077 ms/op
+
+ Benchmarking Sigmoid (N=1048576)
+CPU Time: 8.2992 ms/op
+Custom CUDA Time: 0.9847 ms/op
+cuDNN Time: 1.0416 ms/op
+
+ Benchmarking Tanh (N=1048576)
+CPU Time: 22.4188 ms/op
+Custom CUDA Time: 0.9839 ms/op
+cuDNN Time: 1.0408 ms/op
+
+ Benchmarking Softmax (N=1048576)
+CPU Time: 26.7749 ms/op
+Custom CUDA Time: 56.3486 ms/op
+cuDNN Time: 0.9829 ms/op
+Verification failed at index 0: CPU=1.37012e-30, GPU=1

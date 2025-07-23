@@ -61,7 +61,7 @@ void initializeDeviceMemory(float* d_ptr, size_t num_elements) {
     CUDA_CHECK(cudaMemcpy(d_ptr, h_data.data(), num_elements * sizeof(float), cudaMemcpyHostToDevice));
 }
 
-bool verifyResults(const float* h_out_cpu, const float* h_out_gpu, size_t num_elements, float epsilon = 1e-1) {
+bool verifyResults(const float* h_out_cpu, const float* h_out_gpu, size_t num_elements, float epsilon = 1e-2) {
     for (size_t i = 0; i < num_elements; ++i) {
         if (std::abs(h_out_cpu[i] - h_out_gpu[i]) > epsilon) {
             std::cerr << "Verification failed at index " << i << ": CPU=" << h_out_cpu[i]
@@ -78,7 +78,6 @@ struct CuDNNHandle {
     ~CuDNNHandle() { cudnnDestroy(handle); }
     cudnnHandle_t get() const { return handle; }
 };
-
 inline float* allocateDeviceMemory(size_t num_elements) {
     float* d_ptr;
     CUDA_CHECK(cudaMalloc(&d_ptr, num_elements * sizeof(float)));

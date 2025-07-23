@@ -1,17 +1,19 @@
-#include "common.h" 
-// #include "common.cpp"
+#include "common.h"
+#include "cpu_activations.h"
+#include "cudnn_activations.h"
+#include "cuda_activations.h"
 #include <iostream>
 #include <vector>
-#include <iomanip> 
-#include "cuda_activations.h"
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+#include <cuda_runtime.h>
 #include "cpu_activations.cpp"
-// #include "/home/piyush/Benchmarking/src/cuda_activations.cu"
 #include "cudnn_activations.cpp"
-// #include "cutensor_activations.cu"
+#include "cuda_activations.cu"
 
 cudnnHandle_t g_cudnnHandle;
-// cutensorHandle_t g_cutensorHandle;
-
+cutensorHandle_t g_cutensorHandle;
 void run_benchmark(const std::string& name, size_t num_elements, float alpha_val = 0.01f) {
     std::cout << "\n Benchmarking " << name << " (N=" << num_elements << ")" << std::endl;
     std::vector<float> h_in(num_elements);
@@ -124,7 +126,7 @@ void run_benchmark(const std::string& name, size_t num_elements, float alpha_val
 
 int main() {
     CUDNN_CHECK(cudnnCreate(&g_cudnnHandle));
-    // CUTENSOR_CHECK(cutensorCreate(&g_cutensorHandle));
+    CUTENSOR_CHECK(cutensorCreate(&g_cutensorHandle));
     srand(static_cast<unsigned int>(time(NULL)));
     std::vector<size_t> sizes = {1024, 1024 * 1024, 10 * 1024 * 1024, 100 * 1024 * 1024}; 
     for (size_t N : sizes) {
@@ -135,7 +137,7 @@ int main() {
         run_benchmark("Softmax", N);
     }
     CUDNN_CHECK(cudnnDestroy(g_cudnnHandle));
-    // CUTENSOR_CHECK(cutensorDestroy(g_cutensorHandle));
+    CUTENSOR_CHECK(cutensorDestroy(g_cutensorHandle));
 
     return 0;
-}
+} 

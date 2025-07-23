@@ -34,35 +34,36 @@
 # Define the compiler and flags
 NVCC = /usr/local/cuda/bin/nvcc
 CXX = g++
-CXXFLAGS = -std=c++11 -I/usr/local/cuda/include -Iinclude
-LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc  -lcufft -lcudnn
 
+CUDAFLAGS = -arch=compute_75 -std=c++11
+CXXFLAGS = -std=c++11
 
-# Define directories
-SRC_DIR = src
-BIN_DIR = bin
-DATA_DIR = data
-LIB_DIR = lib
+INCLUDES = -I/usr/local/cuda/include -Iinclude
+LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lcudnn
 
-# Define source files and target executable
-SRC = $(SRC_DIR)/main.cu
-TARGET = $(BIN_DIR)/main
+SRC_CPP = src/main.cpp src/cpu_activations.cpp src/cudnn_activations.cpp src/common.cpp
+SRC_CUDA = src/cuda_activations.cu
 
-# Define the default rule
-all: $(TARGET)
+OBJ_CPP = $(SRC_CPP:.cpp=.o)
+OBJ_CUDA = $(SRC_CUDA:.cu=.o)
 
-# Rule for building the target executable
-$(TARGET): $(SRC)
-	mkdir -p $(BIN_DIR)
-	$(NVCC) -arch=compute_75 -code=sm_75 $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS)
+BIN = bin/main
 
-# Rule for running the application
-run: $(TARGET)
-	./$(TARGET) --input $(DATA_DIR)/Lena.png --output $(DATA_DIR)/Lena_rotated.png
+all: $(BIN)
 
-# Clean up
+$(BIN): $(OBJ_CPP) $(OBJ_CUDA)
+	mkdir -p bin
+	$(NVCC) $(CUDAFLAGS) $(INCLUDES) $^ -o $@ $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+%.o: %.cu
+	$(NVCC) $(CUDAFLAGS) $(INCLUDES) -c $< -o $@
+
 clean:
-	rm -rf $(BIN_DIR)/*
+	rm -rf bin/*.o bin/main src/*.o
+
 
 # Installation rule (not much to install, but here for completeness)
 install:

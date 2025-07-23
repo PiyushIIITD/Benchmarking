@@ -28,6 +28,16 @@
         } \
     } while (0)
 
+#define CUTENSOR_CHECK(call) \
+    do { \
+        cutensorStatus_t status = call; \
+        if (status != CUTENSOR_STATUS_SUCCESS) { \
+            std::cerr << "cuTENSOR Error at " << __FILE__ << ":" << __LINE__ \
+                      << ": " << cutensorGetErrorString(status) << std::endl; \
+            exit(EXIT_FAILURE); \
+        } \
+    } while (0)
+
 inline float measureGPUTime(const std::function<void(float*, float*, size_t)>&func, float* d_in, float* d_out, size_t num_elements) {
     cudaEvent_t start, stop;
     CUDA_CHECK(cudaEventCreate(&start));
@@ -77,6 +87,15 @@ struct CuDNNHandle {
     CuDNNHandle()  { CUDNN_CHECK(cudnnCreate(&handle)); }
     ~CuDNNHandle() { cudnnDestroy(handle); }
     cudnnHandle_t get() const { return handle; }
+};
+
+struct CuTensorHandle {
+    cutensorHandle_t handle;
+    CuTensorHandle()  {
+        CUTENSOR_CHECK(cutensorCreate(&handle)); 
+    }
+    ~CuTensorHandle() {  }
+    cutensorHandle_t get() const { return handle; }
 };
 
 inline float* allocateDeviceMemory(size_t num_elements) {
