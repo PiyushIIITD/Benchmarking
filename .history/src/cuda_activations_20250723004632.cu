@@ -1,11 +1,7 @@
 #include <bits/stdc++.h>
-#include "common.h"
 #include <cuda_runtime.h>
 #include <cfloat>
 #include <math.h>
-#include <functional>
-#include <cassert>
-
 
 #define THREADS_PER_BLOCK 256
 
@@ -94,5 +90,5 @@ void softmax_cuda(float* d_in, float* d_out, size_t N) {
     dim3 dimGrid(1);  
     dim3 dimBlock(THREADS_PER_BLOCK);
     softmax_kernel<<<dimGrid, dimBlock, 2 * sizeof(float)>>>(d_in, d_out, N);
-    cudaGetLastError();
+    CUDA_CHECK(cudaGetLastError());
 }

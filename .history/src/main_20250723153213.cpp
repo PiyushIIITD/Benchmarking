@@ -1,8 +1,8 @@
-#include "common.h" 
+// #include "common.h" 
 #include <iostream>
 #include <vector>
 #include <iomanip> 
-#include "cuda_activations.h"
+// #include "cuda_activations.cuh"
 #include "cpu_activations.cpp"
 #include "/home/piyush/Benchmarking/src/cuda_activations.cu"
 #include "cudnn_activations.cpp"
@@ -11,6 +11,14 @@
 cudnnHandle_t g_cudnnHandle;
 cutensorHandle_t g_cutensorHandle;
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * @brief Run a benchmark for a given activation function.
+ *
+ * @param name the name of the activation function
+ * @param num_elements the number of elements in the input and output arrays
+
+/*******  1cb25087-2eb3-479b-9104-3eddb2d2062e  *******/
 void run_benchmark(const std::string& name, size_t num_elements, float alpha_val = 0.01f) {
     std::cout << "\n Benchmarking " << name << " (N=" << num_elements << ")" << std::endl;
     std::vector<float> h_in(num_elements);

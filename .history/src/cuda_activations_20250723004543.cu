@@ -1,11 +1,7 @@
 #include <bits/stdc++.h>
-#include "common.h"
 #include <cuda_runtime.h>
 #include <cfloat>
 #include <math.h>
-#include <functional>
-#include <cassert>
-
 
 #define THREADS_PER_BLOCK 256
 
@@ -18,7 +14,7 @@ void relu_cuda(float* d_in, float* d_out, size_t N) {
     dim3 dimBlock(THREADS_PER_BLOCK);
     dim3 dimGrid((N + dimBlock.x - 1) / dimBlock.x);
     relu_kernel<<<dimGrid, dimBlock>>>(d_in, d_out, N);
-    cudaGetLastError();
+    CUDA_CHECK(cudaGetLastError());
 }
 
 __global__ void linear_kernel(const float* in, float* out, size_t N) {
@@ -30,7 +26,7 @@ void linear_cuda(float* d_in, float* d_out, size_t N) {
     dim3 dimBlock(THREADS_PER_BLOCK);
     dim3 dimGrid((N + dimBlock.x - 1) / dimBlock.x);
     linear_kernel<<<dimGrid, dimBlock>>>(d_in, d_out, N);
-    cudaGetLastError();
+    CUDA_CHECK(cudaGetLastError());
 }
 
 __global__ void sigmoid_kernel(const float* in, float* out, size_t N) {
@@ -42,7 +38,7 @@ void sigmoid_cuda(float* d_in, float* d_out, size_t N) {
     dim3 dimBlock(THREADS_PER_BLOCK);
     dim3 dimGrid((N + dimBlock.x - 1) / dimBlock.x);
     sigmoid_kernel<<<dimGrid, dimBlock>>>(d_in, d_out, N);
-    cudaGetLastError();
+    CUDA_CHECK(cudaGetLastError());
 }
 
 __global__ void tanh_kernel(const float* in, float* out, size_t N) {
@@ -54,7 +50,7 @@ void tanh_cuda(float* d_in, float* d_out, size_t N) {
     dim3 dimBlock(THREADS_PER_BLOCK);
     dim3 dimGrid((N + dimBlock.x - 1) / dimBlock.x);
     tanh_kernel<<<dimGrid, dimBlock>>>(d_in, d_out, N);
-    cudaGetLastError();
+    CUDA_CHECK(cudaGetLastError());
 }
 
 __global__ void softmax_kernel(const float* in, float* out, size_t N) {
@@ -94,5 +90,5 @@ void softmax_cuda(float* d_in, float* d_out, size_t N) {
     dim3 dimGrid(1);  
     dim3 dimBlock(THREADS_PER_BLOCK);
     softmax_kernel<<<dimGrid, dimBlock, 2 * sizeof(float)>>>(d_in, d_out, N);
-    cudaGetLastError();
+    CUDA_CHECK(cudaGetLastError());
 }

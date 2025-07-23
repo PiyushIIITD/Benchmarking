@@ -34,18 +34,20 @@
 # Define the compiler and flags
 NVCC = /usr/local/cuda/bin/nvcc
 CXX = g++
-CXXFLAGS = -std=c++11 -I/usr/local/cuda/include -Iinclude
-LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc -lcudnn
+CXXFLAGS = -std=c++11 -I/usr/local/cuda/include -Iinclude -I/usr/include/cutensor
+LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc -lcutensor -lcudnn
 
 # Define directories
-SRC_DIR = src/main.cpp src/cuda_activations.cu
-BIN_DIR = bin/main
+SRC_DIR = src
+BIN_DIR = bin
 DATA_DIR = data
 LIB_DIR = lib
 
 # Define source files and target executable
-SRC = $(SRC_DIR)
-TARGET = $(BIN_DIR)
+SRC = $(SRC_DIR)/main.cpp \
+	$(SRC_DIR)/cuda_activations.cu 
+TARGET = $(BIN_DIR)/main \
+		$(BIN_DIR)/cuda_activations		
 
 # Define the default rule
 all: $(TARGET)

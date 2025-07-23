@@ -3,9 +3,6 @@
 #include <cuda_runtime.h>
 #include <cfloat>
 #include <math.h>
-#include <functional>
-#include <cassert>
-
 
 #define THREADS_PER_BLOCK 256
 

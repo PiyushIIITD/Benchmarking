@@ -39,13 +39,13 @@ LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -l
 
 # Define directories
 SRC_DIR = src/main.cpp src/cuda_activations.cu
-BIN_DIR = bin/main
+BIN_DIR = bin
 DATA_DIR = data
 LIB_DIR = lib
 
 # Define source files and target executable
 SRC = $(SRC_DIR)
-TARGET = $(BIN_DIR)
+TARGET = $(BIN_DIR)/main 
 
 # Define the default rule
 all: $(TARGET)

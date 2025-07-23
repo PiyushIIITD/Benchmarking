@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip> 
-#include "cuda_activations.h"
+#include "cuda_activations.cuh"
 #include "cpu_activations.cpp"
 #include "/home/piyush/Benchmarking/src/cuda_activations.cu"
 #include "cudnn_activations.cpp"
