@@ -62,7 +62,7 @@ $(BIN): $(OBJ_CPP) $(OBJ_CUDA)
 	$(NVCC) $(CUDAFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -rf bin/*.o bin/main src/*.o
+	rm -rf bin/*.o bin/main
 
 
 # Installation rule (not much to install, but here for completeness)
