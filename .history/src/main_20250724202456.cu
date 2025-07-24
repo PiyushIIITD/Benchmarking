@@ -95,7 +95,6 @@ void run_benchmark(const std::string& name, size_t num_elements, float alpha_val
     std::cout << "cuDNN Time: " << cudnn_time_ms / BENCHMARK_RUNS << " ms/op" << std::endl;
     CUDA_CHECK(cudaMemcpy(h_out_gpu.data(), d_out, num_elements * sizeof(float), cudaMemcpyDeviceToHost));
     verifyResults(h_out_cpu.data(), h_out_gpu.data(), num_elements);
-    cout<<"\n";
 }
 
 int main() {
